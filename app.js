@@ -22,7 +22,40 @@
   function link(c) { return c.checkout || S.fallbackCta; }
   var blink = B.checkout || S.fallbackCta;
   var CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10" opacity=".25"/><path d="M7 12.5l3.2 3.2L17 8.8"/></svg>';
+  var CHECK_S = '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 10.5l3.2 3L15 7"/></svg>';
+  var ARROW_L = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>';
+  var ARROW_R = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>';
   var CHEV = '<svg class="les__ch" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>';
+
+  /* ---------- Ícones animados (vidro) ---------- */
+  var GLYPH = {
+    hello: '<path class="ac a-pulse" d="M24 5c1.2 10.5 8.5 17.8 19 19-10.5 1.2-17.8 8.5-19 19-1.2-10.5-8.5-17.8-19-19C15.5 22.8 22.8 15.5 24 5z"/><circle class="a-ring" cx="24" cy="24" r="19" opacity=".5"/>',
+    apps: '<rect class="a-bob" x="6" y="6" width="15" height="15" rx="5"/><rect class="ac a-bob2" x="27" y="6" width="15" height="15" rx="5"/><rect class="ac a-bob3" x="6" y="27" width="15" height="15" rx="5"/><rect class="a-bob" x="27" y="27" width="15" height="15" rx="5"/>',
+    copy: '<rect class="ac a-hl" x="6" y="11" width="36" height="9" rx="3" opacity=".55" stroke="none"/><path d="M8 15.5h32M8 26h32M8 36.5h20"/>',
+    refs: '<rect class="a-fan1" x="9" y="12" width="17" height="24" rx="4"/><rect class="ac a-fan2" x="15" y="9" width="17" height="24" rx="4" opacity=".85"/><rect class="a-fan3" x="22" y="12" width="17" height="24" rx="4"/>',
+    identity: '<text x="9" y="31" font-family="PolySans,sans-serif" font-weight="800" font-size="19" fill="currentColor" stroke="none">Aa</text><g class="a-orbit"><circle class="ac" cx="24" cy="5" r="3.2" stroke="none"/></g><circle cx="24" cy="24" r="19" opacity=".35" stroke-dasharray="2 4"/>',
+    format: '<rect x="4" y="15" width="11" height="18" rx="3"/><rect class="ac a-fmt" x="18.5" y="8" width="11" height="32" rx="3"/><rect x="33" y="14" width="11" height="20" rx="3"/>',
+    figma: '<rect x="6" y="7" width="30" height="34" rx="5" stroke-dasharray="3.5 3.5"/><path class="ac a-cur" d="M24 22l17 6.5-7.2 3-3 7.2z" stroke="none"/>',
+    image: '<rect x="6" y="9" width="36" height="30" rx="6"/><path d="M6 33l10-9 8 7 7-6 11 9"/><circle class="ac a-bob" cx="33" cy="19" r="3.4" stroke="none"/><path class="ac a-twk" d="M13 14l1.2 2.8L17 18l-2.8 1.2L13 22l-1.2-2.8L9 18l2.8-1.2z" stroke="none"/>',
+    play: '<circle class="a-ring" cx="24" cy="24" r="18"/><circle class="a-ring2" cx="24" cy="24" r="18"/><path class="ac a-pulse" d="M19 15.5l15 8.5-15 8.5z" stroke="none"/>',
+    check: '<rect x="6" y="6" width="36" height="36" rx="9" opacity=".5"/><path class="a-chk" d="M13 17l3 3 5-6"/><path class="a-chk d2" d="M13 27l3 3 5-6"/><path class="a-chk d3" d="M13 37l3 3 5-6" transform="translate(0 -3)"/><path d="M26 18h10M26 28h10M26 36h6" opacity=".7"/>',
+    folder: '<path d="M5 14a4 4 0 0 1 4-4h10l4 5h16a4 4 0 0 1 4 4v16a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4z"/><rect class="ac a-bob" x="14" y="19" width="20" height="11" rx="3" stroke="none" opacity=".9"/>',
+    chat: '<path d="M8 10h32a3 3 0 0 1 3 3v17a3 3 0 0 1-3 3H22l-8 7v-7H8a3 3 0 0 1-3-3V13a3 3 0 0 1 3-3z"/><circle class="ac a-bob" cx="15" cy="22" r="2.6" stroke="none"/><circle class="ac a-bob2" cx="24" cy="22" r="2.6" stroke="none"/><circle class="ac a-bob3" cx="33" cy="22" r="2.6" stroke="none"/>',
+    script: '<path d="M12 5h17l9 9v26a3 3 0 0 1-3 3H12a3 3 0 0 1-3-3V8a3 3 0 0 1 3-3z"/><path d="M29 5v9h9"/><path class="ac a-hl" d="M15 24h18M15 31h18M15 38h10" stroke-width="3"/>',
+    spark: '<path class="ac a-spin" d="M22 5c1.2 8.5 6.5 13.8 15 15-8.5 1.2-13.8 6.5-15 15-1.2-8.5-6.5-13.8-15-15 8.5-1.2 13.8-6.5 15-15z" stroke="none"/><path class="a-twk" d="M38 28l1.3 3.7L43 33l-3.7 1.3L38 38l-1.3-3.7L33 33l3.7-1.3z" stroke="none" fill="currentColor"/><path class="a-twk2" d="M12 34l1 2.6 2.6 1-2.6 1L12 41l-1-2.4-2.6-1 2.6-1z" stroke="none" fill="currentColor"/>',
+    download: '<path d="M8 32v6a3 3 0 0 0 3 3h26a3 3 0 0 0 3-3v-6"/><g class="a-bob"><path d="M24 6v24"/><path class="ac" d="M15 22l9 10 9-10z" stroke="none"/></g>',
+    wand: '<path d="M10 38L30 18"/><path class="ac a-pulse" d="M30 18l-4-4 5-5 4 4z" stroke="none"/><path class="a-twk" d="M36 24l1.4 3.6L41 29l-3.6 1.4L36 34l-1.4-3.6L31 29l3.6-1.4z" stroke="none" fill="currentColor"/><path class="a-twk2" d="M14 11l1 2.6 2.6 1-2.6 1L14 18l-1-2.4-2.6-1 2.6-1z" stroke="none" fill="currentColor"/>'
+  };
+  var ICOMAP = {
+    /* criativos */ "boas-vindas": "hello", "apps que vou usar": "apps", "analisando a copy": "copy", "buscando referências": "refs", "micro identidade": "identity", "formatos": "format", "criativo no figma": "figma", "imagens na orayon": "image", "vídeo no canva": "play", "boas práticas": "check",
+    /* motion */ "o que já dá pra fazer": "play", "quem sou eu": "hello", "o método e o mecanismo único": "spark", "o que você precisa ter": "check", "identidade visual": "identity", "montar a pasta no pc": "folder", "anexar pastas": "folder", "dar contexto": "chat", "o que é o mecanismo único": "spark", "instalar o método": "download", "referências do método": "refs", "como chamar o método": "chat", "gerar o roteiro": "script", "chamar o método e gerar": "wand",
+    /* etapas do processo */ "copy": "copy", "referência": "refs", "identidade": "identity", "formato": "format", "figma": "figma", "orayon": "image", "canva": "play", "marca": "identity", "pasta": "folder", "briefing": "chat", "roteiro": "script", "opus": "spark", "sonnet": "wand"
+  };
+  var FALLBACK = ["spark", "hello", "check", "refs", "play", "wand"];
+  function glyphKey(title, i) { return ICOMAP[String(title).toLowerCase()] || FALLBACK[i % FALLBACK.length]; }
+  function gico(key, size) {
+    return '<span class="gico" style="--s:' + size + 'px" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">' + GLYPH[key] + "</svg></span>";
+  }
 
   /* ---------- Logo em contorno com brilho correndo ---------- */
   var STAR = [
@@ -101,11 +134,6 @@
   C.forEach(function (c) {
     var card = el("article", { class: "course" + (c.status === "em-breve" ? " course--soon" : ""), style: "--a:" + c.accent });
     if (c.status === "em-breve") return;
-    if (false) {
-      card.innerHTML = '<div class="course__body"><svg class="soon__star" viewBox="0 0 456.21 456.21" aria-hidden="true"><use href="#star"/></svg><span class="tag">Em planejamento</span><h3>' + esc(c.title) + '</h3><p class="course__tag">' + esc(c.pitch) + '</p></div>';
-      if (open.length % 2 === 0) card.classList.add("span");
-      cards.appendChild(card); return;
-    }
     var media = c.media.type === "video"
       ? '<div class="course__media course__media--video"><video muted loop playsinline preload="none" data-src="' + c.media.src + '" poster="' + c.media.poster + '" aria-label="Exemplo de motion do curso"></video></div>'
       : '<div class="course__media"><div class="pair">' + c.media.src.map(function (s) { return '<img src="' + s + '" alt="Exemplo de criativo feito no curso" loading="lazy">'; }).join("") + "</div></div>";
@@ -148,22 +176,65 @@
   });
   showGoal(GOALS[0]);
 
-  /* ---------- Aulas (abas + acordeão) ---------- */
+  /* ---------- Aulas (banner + barra de navegação) ---------- */
   var tabsEl = $("#courseTabs"), syl = $("#syllabus");
+  var curCourse = null, curLesson = 0;
+  function pad(n) { return n < 10 ? "0" + n : "" + n; }
+  function flat(c) {
+    var out = [], n = 0;
+    c.modules.forEach(function (m) { m.lessons.forEach(function (l) { out.push({ n: ++n, mod: m.title, l: l }); }); });
+    return out;
+  }
   function renderSyl(c) {
-    var n = 0;
+    curCourse = c; curLesson = 0;
+    var L = flat(c);
     syl.style.setProperty("--a", c.accent);
-    syl.innerHTML = '<div class="syl" style="--a:' + c.accent + '"><div class="syl__top"><span>' + lessonsOf(c).length + " aulas</span><span>" + fmt(minutesOf(c)) + "</span><span>" + esc(c.pdfsLabel) + "</span></div>" +
-      c.modules.map(function (m) {
-        return '<div class="mod glass"><div class="mod__t"><span>' + esc(m.title) + "</span><small>" + m.lessons.length + (m.lessons.length > 1 ? " aulas" : " aula") + "</small></div>" +
-          m.lessons.map(function (l) {
-            n++; var id = "l" + c.id + n;
-            return '<div class="les"><button class="les__b" aria-expanded="false" aria-controls="' + id + '"><span class="les__n">' + n + '</span><span class="les__ti">' + esc(l.title) + '</span><span class="les__d">' + esc(l.dur) + "</span>" + CHEV + "</button>" +
-              '<div class="les__p" id="' + id + '" role="region"><div><div class="les__in"><p>' + esc(l.sum) + "</p><ul>" + l.points.map(function (p) { return "<li>" + esc(p) + "</li>"; }).join("") + "</ul></div></div></div></div>";
-          }).join("") + "</div>";
-      }).join("") + "</div>";
-    $$(".les__b", syl).forEach(function (b) { b.addEventListener("click", function () { b.setAttribute("aria-expanded", b.getAttribute("aria-expanded") !== "true"); }); });
-    var first = $(".les__b", syl); if (first) first.setAttribute("aria-expanded", "true");
+    syl.innerHTML =
+      '<div class="xp" style="--a:' + c.accent + '">' +
+      '<div class="xp-banner" id="xpBanner"><i class="xp-prog" id="xpProg"></i><span class="xp-nb" id="xpNb" aria-hidden="true"></span>' +
+      '<div class="xp-bt"><small id="xpKick"></small><h3 id="xpTitle"></h3></div><div class="xp-ico" id="xpIco"></div>' +
+      '<span class="xp-live"><i></i>Prévia da aula</span></div>' +
+      '<div class="xp-nav"><div class="xp-meta"><b>' + L.length + ' aulas</b><span>' + fmt(minutesOf(c)) + " · " + esc(c.pdfsLabel) + '</span></div>' +
+      '<ul class="xp-list" id="xpList" role="tablist" aria-label="Aulas do curso">' +
+      L.map(function (x, i) {
+        return '<li role="presentation"><button class="xp-item" role="tab" aria-selected="' + (i === 0) + '" data-i="' + i + '">' + gico(glyphKey(x.l.title, i), 40) +
+          '<span class="xp-tx"><strong>' + esc(x.l.title) + "</strong><span>Aula " + x.n + " · " + esc(x.l.dur) + "</span></span></button></li>";
+      }).join("") + "</ul></div>" +
+      '<div class="xp-body" id="xpBody" aria-live="polite"></div></div>';
+    var list = $("#xpList", syl);
+    function show(i, fromUser) {
+      i = Math.max(0, Math.min(L.length - 1, i)); curLesson = i;
+      var x = L[i], key = glyphKey(x.l.title, i);
+      $$(".xp-item", list).forEach(function (b, k) { b.setAttribute("aria-selected", k === i); });
+      $("#xpNb").textContent = pad(x.n);
+      $("#xpKick").textContent = "Aula " + pad(x.n) + " · " + x.l.dur + " · " + x.mod;
+      $("#xpTitle").textContent = x.l.title;
+      $("#xpIco").innerHTML = gico(key, 96);
+      $("#xpProg").style.width = ((i + 1) / L.length * 100) + "%";
+      var body = $("#xpBody");
+      body.innerHTML = '<p class="xp-sum" data-k>' + esc(x.l.sum) + '</p><p class="xp-q" data-k>O que você vê nesta aula <span id="xpCnt"></span></p><ul class="xp-pts" data-k>' +
+        x.l.points.map(function (p, k) { return '<li><label><input type="checkbox" data-k2="' + k + '"><span class="xp-box">' + CHECK_S + '</span><span>' + esc(p) + "</span></label></li>"; }).join("") +
+        '</ul><div class="xp-foot"><button class="xp-arrow" id="xpPrev" aria-label="Aula anterior"' + (i === 0 ? " disabled" : "") + '>' + ARROW_L + '</button><span class="xp-count">' + (i + 1) + " de " + L.length + '</span><button class="xp-arrow xp-arrow--next" id="xpNext" aria-label="Próxima aula"' + (i === L.length - 1 ? " disabled" : "") + '>Próxima aula' + ARROW_R + "</button></div>";
+      var boxes = $$("input", body), cnt = $("#xpCnt");
+      function upd() { var d = boxes.filter(function (b) { return b.checked; }).length; cnt.textContent = "· " + d + " de " + boxes.length + " marcados"; }
+      boxes.forEach(function (b) { b.addEventListener("change", upd); }); upd();
+      $("#xpPrev").addEventListener("click", function () { show(curLesson - 1, true); });
+      $("#xpNext").addEventListener("click", function () { show(curLesson + 1, true); });
+      var it = $$(".xp-item", list)[i];
+      var left = it.offsetLeft - (list.clientWidth - it.offsetWidth) / 2;
+      if (list.scrollWidth > list.clientWidth) list.scrollTo({ left: left, behavior: reduce ? "auto" : "smooth" });
+      else if (list.scrollHeight > list.clientHeight) list.scrollTo({ top: it.offsetTop - (list.clientHeight - it.offsetHeight) / 2, behavior: reduce ? "auto" : "smooth" });
+      var bn = $("#xpBanner"); bn.classList.remove("swap"); void bn.offsetWidth; bn.classList.add("swap");
+    }
+    $$(".xp-item", list).forEach(function (b) { b.addEventListener("click", function () { show(+b.dataset.i, true); }); });
+    /* deslizar o banner para trocar de aula */
+    var sx = null, bn = $("#xpBanner");
+    bn.addEventListener("touchstart", function (e) { sx = e.touches[0].clientX; }, { passive: true });
+    bn.addEventListener("touchend", function (e) {
+      if (sx == null) return; var dx = e.changedTouches[0].clientX - sx; sx = null;
+      if (Math.abs(dx) > 50) show(curLesson + (dx < 0 ? 1 : -1), true);
+    }, { passive: true });
+    show(0);
   }
   function selectCourse(id, scroll) {
     var c = byId(id); if (!c) return;
@@ -189,7 +260,7 @@
     $$(".tab", ftabs).forEach(function (t) { t.setAttribute("aria-selected", t.dataset.id === id); });
     flow.style.setProperty("--a", c.accent);
     flow.innerHTML = '<div class="flow__rail" style="--n:' + c.flow.steps.length + '">' +
-      c.flow.steps.map(function (s, i) { return '<button class="fstep" role="tab" aria-selected="' + (i === 0) + '" data-i="' + i + '"><span class="fstep__dot">' + (i + 1) + '</span><span class="fstep__t">' + esc(s.t) + "</span></button>"; }).join("") +
+      c.flow.steps.map(function (s, i) { return '<button class="fstep" role="tab" aria-selected="' + (i === 0) + '" data-i="' + i + '"><span class="fstep__dot">' + gico(glyphKey(s.t, i), 56) + '<em>' + (i + 1) + '</em></span><span class="fstep__t">' + esc(s.t) + "</span></button>"; }).join("") +
       '</div><div class="flow__card glass" aria-live="polite"></div>';
     var card = $(".flow__card", flow);
     function show(i) {
