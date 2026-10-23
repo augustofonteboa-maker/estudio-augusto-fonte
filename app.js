@@ -1,7 +1,7 @@
 /* Estúdio Augusto Fonte — monta a página a partir de courses.js */
 (function () {
   "use strict";
-  var S = window.SITE, C = window.COURSES, FAQ = window.FAQ_GERAL;
+  var S = window.SITE, C = window.COURSES, FAQ = window.FAQ_GERAL, B = window.BUNDLE;
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -20,6 +20,7 @@
   function lessonsOf(c) { return c.modules.reduce(function (a, m) { return a.concat(m.lessons); }, []); }
   function minutesOf(c) { return lessonsOf(c).reduce(function (a, l) { return a + mins(l.dur); }, 0); }
   function link(c) { return c.checkout || S.fallbackCta; }
+  var blink = B.checkout || S.fallbackCta;
   var CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10" opacity=".25"/><path d="M7 12.5l3.2 3.2L17 8.8"/></svg>';
   var CHEV = '<svg class="les__ch" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>';
 
@@ -99,7 +100,8 @@
   var cards = $("#courseCards");
   C.forEach(function (c) {
     var card = el("article", { class: "course" + (c.status === "em-breve" ? " course--soon" : ""), style: "--a:" + c.accent });
-    if (c.status === "em-breve") {
+    if (c.status === "em-breve") return;
+    if (false) {
       card.innerHTML = '<div class="course__body"><svg class="soon__star" viewBox="0 0 456.21 456.21" aria-hidden="true"><use href="#star"/></svg><span class="tag">Em planejamento</span><h3>' + esc(c.title) + '</h3><p class="course__tag">' + esc(c.pitch) + '</p></div>';
       if (open.length % 2 === 0) card.classList.add("span");
       cards.appendChild(card); return;
@@ -113,9 +115,8 @@
       '<p class="course__tag">' + esc(c.pitch) + "</p>" +
       '<ul class="meta"><li>' + lessonsOf(c).length + ' aulas</li><li>' + fmt(minutesOf(c)) + '</li><li>' + esc(c.pdfsLabel) + "</li></ul>" +
       '<ul class="ticks">' + c.outcomes.map(function (o) { return "<li>" + CHECK + "<span>" + esc(o) + "</span></li>"; }).join("") + "</ul>" +
-      '<div class="course__foot"><div class="price"><b>' + esc(c.price) + '</b><span>' + esc(c.priceNote) + '</span></div>' +
-      '<div class="course__links"><a class="btn btn--line" href="#aulas" data-open="' + c.id + '">Ver as aulas</a>' +
-      '<a class="btn" href="' + link(c) + '" target="_blank" rel="noopener">Quero este curso</a></div></div></div>';
+      '<div class="course__foot"><span class="tag tag--in">Incluído no curso completo</span>' +
+      '<div class="course__links"><a class="btn btn--line" href="#aulas" data-open="' + c.id + '">Ver as aulas</a></div></div></div>';
     cards.appendChild(card);
     var v = $("video", card); if (v) watch(v);
   });
@@ -123,6 +124,8 @@
     var cio = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("in"); cio.unobserve(e.target); } }); }, { threshold: .3 });
     $$(".course").forEach(function (c) { cio.observe(c); });
   } else $$(".course").forEach(function (c) { c.classList.add("in"); });
+
+  $("#bundleBar").innerHTML = '<div class="bundle-bar__in glass"><div><h3>' + esc(B.title) + '</h3><p>' + esc(B.tagline) + '</p></div><div class="price price--lg"><b>' + esc(B.price) + '</b><span>' + esc(B.priceNote) + '</span></div><a class="btn btn--light" href="' + blink + '" target="_blank" rel="noopener">Quero o curso completo</a></div>';
 
   /* ---------- Por onde começar ---------- */
   var GOALS = [
@@ -231,15 +234,14 @@
 
   /* ---------- Preços ---------- */
   var pr = $("#prices");
-  C.forEach(function (c) {
+  var parts = open.map(function (c) { return '<li><span><b>' + esc(c.title) + '</b>: ' + lessonsOf(c).length + " aulas, " + fmt(minutesOf(c)) + ", " + esc(c.pdfsLabel) + "</span></li>"; }).join("");
+  var big = el("article", { class: "pc pc--combo glass" });
+  big.innerHTML = '<div class="pc__n">' + esc(B.title) + '</div><div class="pc__p"><b>' + esc(B.price) + "</b><span>" + esc(B.priceNote) + "</span></div><ul>" + parts +
+    '<li>' + totalL + " aulas e " + fmt(totalM) + " no total</li>" + B.extra.map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("") + '</ul><a class="btn" href="' + blink + '" target="_blank" rel="noopener">Quero o curso completo</a>';
+  pr.appendChild(big);
+  soon.forEach(function (c) {
     var d = el("article", { class: "pc glass", style: "--a:" + c.accent });
-    if (c.status === "em-breve") {
-      d.innerHTML = '<span class="tag" style="justify-self:start">Em planejamento</span><div class="pc__n">' + esc(c.title) + "</div><p style=\"color:var(--lilac-2)\">" + esc(c.pitch) + "</p>";
-    } else {
-      d.innerHTML = '<div class="pc__n">' + esc(c.title) + '</div><div class="pc__p"><b>' + esc(c.price) + "</b><span>" + esc(c.priceNote) + "</span></div><ul>" +
-        '<li>' + lessonsOf(c).length + " aulas, " + fmt(minutesOf(c)) + "</li><li>" + esc(c.pdfsLabel) + "</li>" + c.facts.map(function (f) { return "<li>" + esc(f) + "</li>"; }).join("") + "</ul>" +
-        '<a class="btn" href="' + link(c) + '" target="_blank" rel="noopener">Quero este curso</a>';
-    }
+    d.innerHTML = '<span class="tag" style="justify-self:start">Em planejamento</span><div class="pc__n">' + esc(c.title) + "</div><p style=\"color:var(--lilac-2)\">" + esc(c.pitch) + "</p>";
     pr.appendChild(d);
   });
 

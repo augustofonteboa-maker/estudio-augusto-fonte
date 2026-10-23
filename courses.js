@@ -14,6 +14,16 @@ window.SITE = {
   fallbackCta: "https://www.instagram.com/_augustofonte/"
 };
 
+/* O CURSÃO: os cursos abertos são vendidos juntos, por um preço único */
+window.BUNDLE = {
+  title: "Criativo e motion: o curso completo",
+  tagline: "Os dois cursos num só. Do anúncio estático ao motion pronto.",
+  price: "R$ 297",
+  priceNote: "pagamento único, os dois cursos juntos",
+  checkout: "",                 // cole aqui o link de compra do cursão
+  extra: ["Acesso aos dois cursos de uma vez", "Mais cursos chegando a este mesmo ambiente"]
+};
+
 window.COURSES = [
   /* ------------------------------------------------------ */
   {
